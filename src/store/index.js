@@ -10,13 +10,13 @@ import categories from "./modules/categories";
 Vue.use(Vuex);
 
 const storeData = {
-    modules: {
-        auth,
-        alert,
-        tasks,
-        categories,
-    },
-    plugins: [createPersistedState()],
+  modules: {
+    auth,
+    alert,
+    tasks,
+    categories,
+  },
+  plugins: [createPersistedState()],
 };
 
 const store = new Vuex.Store(storeData);

@@ -1,37 +1,23 @@
 const state = () => ({
-    type: null,
-    message: null,
+  type: null,
+  message: null,
 });
 
 const actions = {
-    alertSuccess({ commit }, message) {
-        commit("ALERT_SUCCESS", message);
-    },
-    alertError({ commit }, message) {
-        commit("ALERT_ERROR", message);
-    },
-    alertClear({ commit }) {
-        commit("ALERT_CLEAR");
-    },
+  alertMessage({ commit }, { type, message }) {
+    commit("ALERT_MESSAGE", { type, message });
+  },
 };
 
 const mutations = {
-    ALERT_SUCCESS(state, message) {
-        state.type = "alert-success";
-        state.message = message;
-    },
-    ALERT_ERROR(state, message) {
-        state.type = "alert-danger";
-        state.message = message;
-    },
-    ALERT_CLEAR(state) {
-        state.type = null;
-        state.message = null;
-    },
+  ALERT_MESSAGE(state, { type, message }) {
+    state.type = type;
+    state.message = message;
+  },
 };
 
 export default {
-    state,
-    mutations,
-    actions,
+  state,
+  mutations,
+  actions,
 };
