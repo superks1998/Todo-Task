@@ -1,6 +1,6 @@
 <template>
   <div class="task-form">
-    <div class="form-wrapper">
+    <div v-if="auth.isAuthenticated" class="form-wrapper">
       <form
         @submit.prevent="
           updateId
@@ -11,7 +11,7 @@
         <h4>{{ updateId ? "Update Task" : "Add Task" }}</h4>
         <div class="form-field">
           <label>Title Task</label>
-          <input v-model="titleTask" type="text" />
+          <input class="form-field-input" v-model="titleTask" type="text" />
         </div>
         <div class="form-field">
           <p>Categories:</p>
@@ -23,6 +23,7 @@
           >
             {{ category.name }}
             <input
+              class="form-field-checkbox"
               type="checkbox"
               :id="category.name"
               @change="handleCheckedCategory($event, category.id)"
@@ -30,10 +31,11 @@
           </label>
         </div>
         <div class="form-field">
-          <input type="submit" value="Submit" />
+          <input class="form-field-input submit" type="submit" value="Submit" />
         </div>
       </form>
     </div>
+    <h3 v-else>Login Now</h3>
   </div>
 </template>
 
@@ -51,7 +53,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["categories", "tasks"]),
+    ...mapState(["categories", "tasks", "auth"]),
     taskUpdate() {
       return {
         title: this.titleTask,
@@ -60,7 +62,9 @@ export default {
     },
   },
   async created() {
-    this.getCategories();
+    if (this.auth.isAuthenticated) {
+      this.getCategories();
+    }
     if (this.updateId) {
       const taskUpdate = await this.handleGetTask(this.updateId);
       this.titleTask = taskUpdate.title;

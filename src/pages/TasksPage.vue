@@ -3,7 +3,7 @@
     <ul v-if="auth.isAuthenticated" class="responsive-table">
       <div class="form-field">
         <label>Filter Task</label>
-        <input type="text" @input="debouncedHandler" />
+        <input class="form-field-input" type="text" @input="debouncedHandler" />
       </div>
       <li class="table-header">
         <div class="col col-3">Tasks</div>
@@ -48,6 +48,7 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import debounce from "lodash.debounce";
+import { TASK_EDIT_PATH } from "../constant/urlPath";
 
 export default {
   name: "TaskPage",
@@ -70,7 +71,9 @@ export default {
     },
   },
   created() {
-    this.getAllTasks();
+    if (this.auth.isAuthenticated) {
+      this.getAllTasks();
+    }
   },
   beforeUnmount() {
     this.debouncedHandler.cancel();
@@ -78,7 +81,7 @@ export default {
   methods: {
     ...mapActions(["getAllTasks", "markCompleted", "deleteTask"]),
     handleUpdateTask(taskId) {
-      this.$router.push(`/task/edit/${taskId}`);
+      this.$router.push(`${TASK_EDIT_PATH}${taskId}`);
     },
 
     handleDeleteTask(idDelete) {
@@ -94,8 +97,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../assets/_variables.scss";
-
 .container {
   max-width: 1000px;
   margin-left: auto;

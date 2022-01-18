@@ -1,32 +1,31 @@
 <template>
   <ul class="navbar">
-    <li>
-      <router-link to="/"><button>Home</button></router-link>
-    </li>
-    <li v-if="auth.isAuthenticated">
-      <router-link to="/task/add"><button>Add Task</button></router-link>
-      <button @click="logout">Logout</button>
-    </li>
-    <li v-else>
-      <router-link to="/login"><button>Login</button></router-link
-      ><router-link to="/register"><button>Register</button></router-link>
+    <li v-for="item in listItemNav" :key="item.text">
+      <router-link :to="item.path"
+        ><button class="btn">{{ item.text }}</button></router-link
+      >
     </li>
   </ul>
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { LOGIN_PATH, REGISTER_PATH, HOME_PATH } from "../constant/urlPath";
 
 export default {
   name: "Navbar",
-  computed: mapState(["auth"]),
-  methods: mapActions(["logout"]),
+  data() {
+    return {
+      listItemNav: [
+        { path: HOME_PATH, text: "Home" },
+        { path: LOGIN_PATH, text: "Login" },
+        { path: REGISTER_PATH, text: "Register" },
+      ],
+    };
+  },
 };
 </script>
 
 <style lang="scss">
-@import "../assets/_variables.scss";
-
 .navbar {
   max-width: 960px;
   margin: 10px auto 20px;

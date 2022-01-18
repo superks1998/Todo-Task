@@ -4,15 +4,24 @@
       <h4>Register</h4>
       <div class="form-field">
         <label for="username">Username</label>
-        <input v-model="username" type="text" name="username" />
+        <input
+          class="form-field-input"
+          v-model="username"
+          type="text"
+          name="username"
+        />
       </div>
       <div class="form-field">
         <label for="password">Password</label>
-        <input v-model="password" type="text" name="password" />
-        <!-- <span>{{ errors.first("password") }}</span> -->
+        <input
+          class="form-field-input"
+          v-model="password"
+          type="text"
+          name="password"
+        />
       </div>
       <div class="form-field">
-        <input type="submit" value="Submit" />
+        <input class="form-field-input submit" type="submit" value="Submit" />
       </div>
     </form>
   </div>
