@@ -1,6 +1,6 @@
 <template>
   <div class="task-form">
-    <div v-if="auth.isAuthenticated" class="form-wrapper">
+    <div v-if="isAuthenticated" class="form-wrapper">
       <form
         @submit.prevent="
           updateId
@@ -16,7 +16,7 @@
         <div class="form-field">
           <p>Categories:</p>
           <label
-            v-for="category in categories.categories"
+            v-for="category in categories"
             :key="category.id"
             :for="category.name"
             class="task-form-label"
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import tasksApi from "../api/tasksApi";
 
 export default {
@@ -53,7 +53,10 @@ export default {
     };
   },
   computed: {
-    ...mapState(["categories", "tasks", "auth"]),
+    ...mapGetters({
+      isAuthenticated: "auth/isAuthenticated",
+      categories: "categories/categories",
+    }),
     taskUpdate() {
       return {
         title: this.titleTask,
@@ -62,7 +65,7 @@ export default {
     },
   },
   async created() {
-    if (this.auth.isAuthenticated) {
+    if (this.isAuthenticated) {
       this.getCategories();
     }
     if (this.updateId) {
@@ -71,7 +74,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["getCategories", "getTask", "addTask", "updateTask"]),
+    ...mapActions("tasks", ["getTask", "addTask", "updateTask"]),
+    ...mapActions({
+      getCategories: "categories/getCategories",
+    }),
     handleCheckedCategory(e, categoryId) {
       if (e.target.checked) {
         if (this.categoriesTask.indexOf(categoryId) === -1) {

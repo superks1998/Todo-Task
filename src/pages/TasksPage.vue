@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <ul v-if="auth.isAuthenticated" class="responsive-table">
+    <ul v-if="isAuthenticated" class="responsive-table">
       <div class="form-field">
         <label>Filter Task</label>
         <input class="form-field-input" type="text" @input="debouncedHandler" />
@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import debounce from "lodash.debounce";
 import { TASK_EDIT_PATH } from "../constant/urlPath";
 
@@ -58,9 +58,12 @@ export default {
     };
   },
   computed: {
-    ...mapState(["auth", "tasks"]),
+    ...mapGetters({
+      tasks: "tasks/tasks",
+      isAuthenticated: "auth/isAuthenticated",
+    }),
     filteredTask() {
-      return this.tasks.tasks.filter(
+      return this.tasks.filter(
         (task) => task.title.indexOf(this.search) !== -1
       );
     },
@@ -71,7 +74,7 @@ export default {
     },
   },
   created() {
-    if (this.auth.isAuthenticated) {
+    if (this.isAuthenticated) {
       this.getAllTasks();
     }
   },
@@ -79,7 +82,7 @@ export default {
     this.debouncedHandler.cancel();
   },
   methods: {
-    ...mapActions(["getAllTasks", "markCompleted", "deleteTask"]),
+    ...mapActions("tasks", ["getAllTasks", "markCompleted", "deleteTask"]),
     handleUpdateTask(taskId) {
       this.$router.push(`${TASK_EDIT_PATH}${taskId}`);
     },

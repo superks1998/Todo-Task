@@ -4,6 +4,10 @@ const state = () => ({
   tasks: [],
 });
 
+const getters = {
+  tasks: (state) => state.tasks,
+};
+
 const actions = {
   async getAllTasks({ commit }) {
     try {
@@ -13,14 +17,6 @@ const actions = {
       console.log(error);
     }
   },
-  // async getTask(idTask) {
-  //     try {
-  //         const response = await tasksApi.get(idTask);
-  //         commit("SET_TASK", response);
-  //     } catch (error) {
-  //         console.log(error);
-  //     }
-  // },
   async addTask({ commit }, newTask) {
     try {
       const response = await tasksApi.add(newTask);
@@ -54,9 +50,6 @@ const mutations = {
   SET_TASKS(state, tasks) {
     state.tasks = tasks;
   },
-  // SET_TASK(state, taskUpdate) {
-  //     state.taskUpdate = taskUpdate;
-  // },
   ADD_TASK(state, newTask) {
     state.tasks.unshift(newTask);
   },
@@ -77,7 +70,9 @@ const mutations = {
 };
 
 export default {
+  namespaced: true,
   mutations,
+  getters,
   actions,
   state,
 };

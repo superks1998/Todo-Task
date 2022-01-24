@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapActions } from "vuex";
 import { HOME_PATH } from "../constant/urlPath";
 import {
   MESSAGE_LOGIN_SUCCESS,
@@ -44,9 +44,11 @@ export default {
       password: "",
     };
   },
-  computed: mapState(["auth"]),
   methods: {
-    ...mapActions(["login", "alertMessage"]),
+    ...mapActions({
+      login: "auth/login",
+      alertMessage: "alert/alertMessage",
+    }),
     async handleSubmit({ username, password }) {
       this.login({ username, password });
       try {

@@ -4,6 +4,10 @@ const state = () => ({
   categories: [],
 });
 
+const getters = {
+  categories: (state) => state.categories,
+};
+
 const actions = {
   async getCategories({ commit }) {
     try {
@@ -23,7 +27,9 @@ const mutations = {
 };
 
 export default {
+  namespaced: true,
   state,
+  getters,
   mutations,
   actions,
 };

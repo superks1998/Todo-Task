@@ -1,8 +1,8 @@
 <template>
   <div>
     <Header />
-    <div v-if="alert.message" :class="`alert ${alert.type}`">
-      {{ alert.message }}
+    <div v-if="message" :class="`alert ${type}`">
+      {{ message }}
     </div>
     <router-view />
     <Footer />
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import Header from "./Header.vue";
 import Footer from "./Footer";
 
@@ -20,12 +20,11 @@ export default {
     Header,
     Footer,
   },
-  computed: mapState(["alert"]),
-  methods: mapActions(["alertMessage"]),
+  computed: mapGetters("alert", ["message", "type"]),
+  methods: mapActions("alert", ["alertMessage"]),
   watch: {
     $route(to, from) {
-      console.log(to);
-      console.log(from);
+      console.log(to, from);
       this.alertMessage({ type: null, message: null });
     },
   },

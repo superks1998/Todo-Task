@@ -4,6 +4,9 @@ const state = () => ({
   token: "",
   isAuthenticated: false,
 });
+const getters = {
+  isAuthenticated: (state) => state.isAuthenticated,
+};
 const actions = {
   async login({ commit }, { username, password }) {
     try {
@@ -42,7 +45,9 @@ const mutations = {
 };
 
 export default {
+  namespaced: true,
   state,
+  getters,
   mutations,
   actions,
 };

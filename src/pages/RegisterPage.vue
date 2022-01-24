@@ -45,7 +45,10 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["register", "alertMessage"]),
+    ...mapActions({
+      register: "auth/register",
+      alertMessage: "alert/alertMessage",
+    }),
     async handleSubmit({ username, password }) {
       try {
         await this.register({ username, password });

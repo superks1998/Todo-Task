@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <h1>Todo App</h1>
-    <div class="header-nav" v-if="auth.isAuthenticated">
+    <div class="header-nav" v-if="isAuthenticated">
       <router-link :to="pathHome"
         ><button class="btn">Home</button></router-link
       >
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import { HOME_PATH, TASK_ADD_PATH } from "../constant/urlPath";
 
 import Navbar from "./Navbar.vue";
@@ -31,8 +31,8 @@ export default {
     Navbar,
   },
 
-  computed: mapState(["auth"]),
-  methods: mapActions(["logout"]),
+  computed: mapGetters("auth", ["isAuthenticated"]),
+  methods: mapActions("auth", ["logout"]),
 };
 </script>
 
