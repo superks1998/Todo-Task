@@ -1,0 +1,42 @@
+.form-field {
+  &-input {
+    width: 600px;
+    min-height: 44px;
+    margin-bottom: 15px;
+    padding: 8px 16px;
+    font-size: 16px;
+    line-height: 28px;
+    background-color: white;
+    box-shadow: $input-shadow;
+    border: unset;
+    border-radius: 4px;
+    outline-color: $outline-color;
+    &.submit {
+      color: white;
+      background-color: $primary-color;
+      box-shadow: $input-shadow-submit;
+      cursor: pointer;
+    }
+  }
+  .task-form-label {
+    display: inline-block;
+    margin-right: 20px;
+  }
+  &-checkbox {
+    margin-top: 10px;
+    margin-left: 5px;
+    font-weight: 600;
+    background-color: $primary-color;
+    transform: scale(1.2);
+    cursor: pointer;
+  }
+  p {
+    margin: 0;
+  }
+  label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    text-align: left;
+  }
+}
